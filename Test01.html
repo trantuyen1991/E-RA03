@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <script src="https://www.unpkg.com/@eohjsc/era-widget@1.1.3/src/index.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type='text/javascript'>
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(draw_LineChart_01);
+            let view_LineChart_01, data_LineChart_01, chart_LineChart_01; 
+            function draw_LineChart_01(){
+                data_LineChart_01 = google.visualization.arrayToDataTable([
+                    ['Time', 'CV103', 'CV104', 'CV105', 'CV106', 'CV107'],
+                    [formatTime(new Date()), 0, 1,  2,  3,  4 ],
+                    [formatTime(new Date()), 5, 4,  3,  2,  1 ],
+                    [formatTime(new Date()), 6, 7,  8,  9,  10],
+                    [formatTime(new Date()), 8, 7,  6,  5,  4 ]  
+                ]);
+                // View Data
+                view_LineChart_01 = new google.visualization.DataView(data_LineChart_01);
+                view_LineChart_01.setColumns([0, 1, {
+                    calc: 'stringify',
+                    sourceColumn: 1,
+                    type: 'string',
+                    role: 'annotation'},
+                    2, {
+                    calc: 'stringify',
+                    sourceColumn: 2,
+                    type: 'string',
+                    role: 'annotation'},
+                    3, {
+                    calc: 'stringify',
+                    sourceColumn: 3,
+                    type: 'string',
+                    role: 'annotation'},
+                    4, {
+                    calc: 'stringify',
+                    sourceColumn: 4,
+                    type: 'string',
+                    role: 'annotation'},
+                    5, {
+                    calc: 'stringify',
+                    sourceColumn: 5,
+                    type: 'string',
+                    role: 'annotation'}
+                    ]
+                );
+                // Line Chart   
+                const options_LineChart_01 = {
+                    title: 'Pail Per Min',
+                    curveType: 'function',
+                    legend: { position: 'bottom', maxLines: 2 },
+                    vAxis: {
+                        viewWindow: {
+                            min: 0
+                        }
+                    },
+                    annotations: true
+                }; 
+                // Draw  
+                chart_LineChart_01 = new google.visualization.LineChart(document.getElementById('id_LineChart_01'));
+                chart_LineChart_01.draw(view_LineChart_01, options_LineChart_01);
+            }
+
+        /*-----------------------------Utility Function------------------------------------*/
+            // Function to format the current time as HH:MM:SS
+            function formatTime(date) {
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const seconds = date.getSeconds().toString().padStart(2, '0');
+                return `${hours}:${minutes}:${seconds}`;
+            }
+        </script> 
+    </head>
+
+    <body>
+        <div id="id_LineChart_01"></div>
+    </body>
+</html>

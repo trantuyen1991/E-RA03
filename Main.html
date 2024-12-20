@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Components</title>
+  <script src="https://www.unpkg.com/@eohjsc/era-widget@1.1.3/src/index.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <style>
+    body{
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-color: cornflowerblue;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    .container{
+      margin: 0;
+      padding: 0;
+      background-color: aqua;
+      justify-content: space-around;
+      width: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="col-12 container">
+    <div id="carouselExampleIndicators" class="col-12 carousel carousel-dark slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active container parent">
+          <div id="id_PieChart_01"></div>
+        </div>
+        <div class="carousel-item">
+          <div id="id_PieChart_02"></div>
+        </div>
+        <div class="carousel-item">
+          <div id="id_PieChart_03"></div>
+        </div>
+        <div class="carousel-item">
+          <div id="id_PieChart_04"></div>
+        </div>
+        <div class="carousel-item">
+          <div id="id_PieChart_05"></div>
+        </div>
+        <div class="carousel-item">
+          <div id="id_LineChart_01" ></div>
+        </div>
+        <div class="carousel-item">
+          <div id="id_ColumnChart_01"></div>
+        </div>
+        <div class="carousel-item">
+          <div id="id_ColumnChart_02"></div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  <!--------------------------------- Carousel Navigate ---------------------------->   
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous">
+  </script>
+  <!-- Piechart -->  
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawInitialChart);
+    // Define data and chart globally
+    let data_PieChart_01,chart_PieChart_01,
+        data_PieChart_02,chart_PieChart_02,
+        data_PieChart_03,chart_PieChart_03,
+        data_PieChart_04,chart_PieChart_04,
+        data_PieChart_05,chart_PieChart_05;
+    let data_LineChart_01  , chart_LineChart_01   ,view_LineChart_01; 
+    let data_ColumnChart_01, chart_ColumnChart_01 ,view_ColumnChart_01;
+    let data_ColumnChart_02, chart_ColumnChart_02 ,view_ColumnChart_02;
+    // CV103
+    const options_PieChart_01 = {
+      title: 'CV103-Total Time (Hour)',
+      is3D: true
+      //pieHole: 0.4
+    };
+    // CV104
+    const options_PieChart_02 = {
+      title: 'CV104-Total Time (Hour)',
+      is3D: true
+      //pieHole: 0.4
+    };
+    // CV105
+    const options_PieChart_03 = {
+      title: 'CV105-Total Time (Hour)',
+      is3D: true
+      //pieHole: 0.4
+    };    
+    // CV106
+    const options_PieChart_04 = {
+      title: 'CV106-Total Time (Hour)',
+      is3D: true
+      //pieHole: 0.4
+    };
+    // CV107
+    const options_PieChart_05 = {
+      title: 'CV107-Total Time (Hour)',
+      is3D: true
+      //pieHole: 0.4
+    };
+    // Line Chart   
+    const options_LineChart_01 = {
+      title: 'Pail Per Min',
+      curveType: 'function',
+      legend: { position: 'bottom', maxLines: 2 },
+      vAxis: {
+        viewWindow: {
+          min: 0
+        }
+      }
+    }; 
+    // Column Chart               
+    const options_ColumnChart_01 = {
+      title: "Daily Total Product",
+      bar: {groupWidth: "65%"},
+      legend: { position: "bottom", maxLines: 2 },
+      isStacked: true,
+      vAxis: {
+        title: 'Total'
+      },
+      vAxis: { 
+        viewWindow: {
+          min: 0
+        }
+       },
+      annotations: {
+        alwaysOutside: true, // Show totals above bars
+        textStyle: {
+          fontSize: 12,
+          bold: true,
+          color: '#000',
+        },
+      }
+    };  
+    // Option
+    const options_ColumnChart_02 = {
+      //isStacked: true,
+      title: 'Total Time (Hour)',
+      //annotations: true,
+      bar: {groupWidth: "65%"},
+      legend: { position: "bottom", maxLines: 2 },
+      vAxis: {
+        title: 'Total'
+      },
+      vAxis: { minValue: 0 },
+      annotations: {
+        //alwaysOutside: true, // Show totals above bars
+        textStyle: {
+          fontSize: 12,
+          bold: true,
+          color: '#000',
+        },
+      }
+  };  
+    // Initialize the Line Chart
+    function drawInitialChart() {
+      chart_PieChart_01     = new google.visualization.PieChart(document.getElementById('id_PieChart_01'));
+      chart_PieChart_02     = new google.visualization.PieChart(document.getElementById('id_PieChart_02'));
+      chart_PieChart_03     = new google.visualization.PieChart(document.getElementById('id_PieChart_03'));
+      chart_PieChart_04     = new google.visualization.PieChart(document.getElementById('id_PieChart_04'));
+      chart_PieChart_05     = new google.visualization.PieChart(document.getElementById('id_PieChart_05'));
+      chart_LineChart_01    = new google.visualization.LineChart(document.getElementById('id_LineChart_01'));
+      chart_ColumnChart_01  = new google.visualization.ColumnChart(document.getElementById("id_ColumnChart_01"));
+      chart_ColumnChart_02  = new google.visualization.ColumnChart(document.getElementById("id_ColumnChart_02"));
+      //
+      draw_PieChart_01(); // Draw the first chart on load
+      //
+      document.getElementById('carouselExampleIndicators').addEventListener('slid.bs.carousel', (event) => {
+        if (event.relatedTarget.querySelector('#id_PieChart_01')) {
+          draw_PieChart_01();
+        } else if (event.relatedTarget.querySelector('#id_PieChart_02')) {
+          draw_PieChart_02();
+        } else if (event.relatedTarget.querySelector('#id_PieChart_03')) {
+          draw_PieChart_03();
+        } else if (event.relatedTarget.querySelector('#id_PieChart_04')) {
+          draw_PieChart_04();
+        } else if (event.relatedTarget.querySelector('#id_PieChart_05')) {
+          draw_PieChart_05();
+        } else if (event.relatedTarget.querySelector('#id_LineChart_01')) {
+          draw_LineChart_01();
+        } else if (event.relatedTarget.querySelector('#id_ColumnChart_01')) {
+          draw_ColumnChart_01();
+        } else if (event.relatedTarget.querySelector('#id_ColumnChart_02')) {
+          draw_ColumnChart_02();
+        }
+      });
+      window.addEventListener('resize', () => {
+        draw_PieChart_01();
+        draw_PieChart_02();
+        draw_PieChart_03();
+        draw_PieChart_04();
+        draw_PieChart_05();
+        draw_LineChart_01();
+        draw_ColumnChart_01();
+        draw_ColumnChart_02();
+      });
+    }
+    /*-----------------------------Pie Chart Initialization (Unchanged)-----------------------------*/
+    // CV103
+    function draw_PieChart_01(){
+      data_PieChart_01 = google.visualization.arrayToDataTable([
+        ['Time' , 'Value'],
+        ['Run'  , 25],
+        ['Sleep', 31],
+        ['Error', 15]
+      ]);
+      chart_PieChart_01.draw(data_PieChart_01, options_PieChart_01);  
+    }
+    // CV104
+    function draw_PieChart_02(){
+      data_PieChart_02 = google.visualization.arrayToDataTable([
+        ['Time' , 'Value'],
+        ['Run'  , 25],
+        ['Sleep', 31],
+        ['Error', 15]
+      ]);
+      chart_PieChart_02.draw(data_PieChart_02, options_PieChart_02);
+    }  
+    // CV105
+    function draw_PieChart_03(){
+      data_PieChart_03 = google.visualization.arrayToDataTable([
+        ['Time' , 'Value'],
+        ['Run'  , 25],
+        ['Sleep', 31],
+        ['Error', 15]
+      ]);
+      chart_PieChart_03.draw(data_PieChart_03, options_PieChart_03);
+    }  
+    // CV106
+    function draw_PieChart_04(){
+      data_PieChart_04 = google.visualization.arrayToDataTable([
+        ['Time' , 'Value'],
+        ['Run'  , 25],
+        ['Sleep', 31],
+        ['Error', 15]
+      ]);
+      chart_PieChart_04.draw(data_PieChart_04, options_PieChart_04);
+    }  
+    // CV107
+    function draw_PieChart_05(){
+      data_PieChart_05 = google.visualization.arrayToDataTable([
+        ['Time' , 'Value'],
+        ['Run'  , 25],
+        ['Sleep', 31],
+        ['Error', 15]
+      ]);
+      chart_PieChart_05.draw(data_PieChart_05, options_PieChart_05);
+    }  
+    /*-----------------------------Line Chart Initialization-----------------------------*/
+    function draw_LineChart_01(){
+      // Data
+      data_LineChart_01 = google.visualization.arrayToDataTable([
+        ['Time', 'CV103', 'CV104', 'CV105', 'CV106', 'CV107'],
+        [formatTime(new Date()), 0, 1,  2,  3,  4 ],
+        [formatTime(new Date()), 5, 4,  3,  2,  1 ],
+        [formatTime(new Date()), 6, 7,  8,  9,  10],
+        [formatTime(new Date()), 8, 7,  6,  5,  4 ]  
+       ]);
+      // View Data
+      view_LineChart_01 = new google.visualization.DataView(data_LineChart_01);
+      view_LineChart_01.setColumns([0, 1, {
+          calc: 'stringify',
+          sourceColumn: 1,
+          type: 'string',
+          role: 'annotation'},
+          2, {
+          calc: 'stringify',
+          sourceColumn: 2,
+          type: 'string',
+          role: 'annotation'},
+          3, {
+          calc: 'stringify',
+          sourceColumn: 3,
+          type: 'string',
+          role: 'annotation'},
+          4, {
+          calc: 'stringify',
+          sourceColumn: 4,
+          type: 'string',
+          role: 'annotation'},
+          5, {
+          calc: 'stringify',
+          sourceColumn: 5,
+          type: 'string',
+          role: 'annotation'}
+          ]
+      );
+      // Draw  
+      chart_LineChart_01.draw(view_LineChart_01, options_LineChart_01);
+    }
+    /*-----------------------------Column Chart 01------------------------------------*/
+    function draw_ColumnChart_01(){
+      // Data
+      data_ColumnChart_01 = google.visualization.arrayToDataTable([
+          ['Station','Tint/Dalmec', '275mm/30Pail', '370mm/30Pail', '370mm/26Pail', '380mm/30Pail',
+           { role: 'annotation' } ],
+          ['CV103', 10, 20, 30, 40, 50,''],
+          ['CV104', 20, 20, 30, 40, 50,''],
+          ['CV105', 30, 20, 30, 40, 50,''],
+          ['CV106', 40, 20, 30, 40, 50,''],
+          ['CV107', 50, 20, 30, 40, 50,'']
+      ]);
+      // Calculate totals for annotations
+      for (let i = 0; i < data_ColumnChart_01.getNumberOfRows(); i++) {
+        const total = data_ColumnChart_01.getValue(i, 1) + data_ColumnChart_01.getValue(i, 2) + data_ColumnChart_01.getValue(i, 3)
+                    + data_ColumnChart_01.getValue(i, 4) + data_ColumnChart_01.getValue(i, 5);
+        data_ColumnChart_01.setValue(i, 6, total.toString()); // Set total as annotation
+      }
+      // View
+      view_ColumnChart_01 = new google.visualization.DataView(data_ColumnChart_01);
+      view_ColumnChart_01.setColumns([0,1,{
+        calc: 'stringify',
+          sourceColumn: 1,
+          type: 'string',
+          role: 'annotation'},
+          2, {
+          calc: 'stringify',
+          sourceColumn: 2,
+          type: 'string',
+          role: 'annotation'},
+          3, {
+          calc: 'stringify',
+          sourceColumn: 3,
+          type: 'string',
+          role: 'annotation'},
+          4, {
+          calc: 'stringify',
+          sourceColumn: 4,
+          type: 'string',
+          role: 'annotation'},
+          5, {
+          calc: 'stringify',
+          sourceColumn: 5,
+          type: 'string',
+          role: 'annotation'}
+          ]
+      );
+      // Draw
+      chart_ColumnChart_01.draw(view_ColumnChart_01, options_ColumnChart_01);
+    }      
+    /*-----------------------------Column Chart 02------------------------------------*/
+    function draw_ColumnChart_02() {
+      data_ColumnChart_02 = google.visualization.arrayToDataTable([
+        ['Station','Run', 'Sleep', 'Error',{ role: 'annotation' }],
+        ['CV103', 5, 8, 6, ''],
+        ['CV104', 5, 8, 6, ''],
+        ['CV105', 5, 8, 6, ''],
+        ['CV106', 5, 8, 6, ''],
+        ['CV107', 5, 8, 6, '']
+      ]);
+      // Calculate totals for annotations
+      for (let i = 0; i < data_ColumnChart_02.getNumberOfRows(); i++) {
+        const total = data_ColumnChart_02.getValue(i, 1) + data_ColumnChart_02.getValue(i, 2) + data_ColumnChart_02.getValue(i, 3);
+        data_ColumnChart_02.setValue(i, 4, total.toString()); // Set total as annotation
+      }
+      // View Data
+      view_ColumnChart_02 = new google.visualization.DataView(data_ColumnChart_02);
+      view_ColumnChart_02.setColumns([0, 1, {
+          calc: 'stringify',
+          sourceColumn: 1,
+          type: 'string',
+          role: 'annotation'},
+          2, {
+          calc: 'stringify',
+          sourceColumn: 2,
+          type: 'string',
+          role: 'annotation'},
+          3, {
+          calc: 'stringify',
+          sourceColumn: 3,
+          type: 'string',
+          role: 'annotation'}
+          ]
+      );
+      // draw
+      chart_ColumnChart_02.draw(view_ColumnChart_02, options_ColumnChart_02);
+    }
+/*-----------------------------FUNCTION- Update Pie Chart -01------------------------------------*/
+  // CV103
+  function update_PieChart_01(Run, Sleep) {
+    data_PieChart_01.setValue(0, 1, Run); // 
+    data_PieChart_01.setValue(1, 1, Run); // 
+    //var Error = 24-(Run+Sleep);
+    data_PieChart_01.setValue(2, 1, Error); // 
+    chart_PieChart_01.draw(data_PieChart_01, options_PieChart_01); // Redraw the chart with updated data
+  }
+  // CV104
+  function update_PieChart_02(Run, Sleep) {
+    data_PieChart_02.setValue(0, 1, Run); // 
+    data_PieChart_02.setValue(1, 1, Sleep); // 
+    var Error = 24-(Run+Sleep);
+    data_PieChart_02.setValue(2, 1, Error); // 
+    chart_PieChart_02.draw(data_PieChart_02, options_PieChart_02); // Redraw the chart with updated data
+  }
+  // CV105
+  function update_PieChart_03(Run, Sleep) {
+  data_PieChart_03.setValue(0, 1, Run); // 
+  data_PieChart_03.setValue(1, 1, Sleep); // 
+  var Error = 24-(Run+Sleep);
+  data_PieChart_03.setValue(2, 1, Error); // 
+  chart_PieChart_03.draw(data_PieChart_03, options_PieChart_03); // Redraw the chart with updated data
+  }
+  // CV106
+  function update_PieChart_04(Run, Sleep) {
+  data_PieChart_04.setValue(0, 1, Run); // 
+  data_PieChart_04.setValue(1, 1, Sleep); // 
+  var Error = 24-(Run+Sleep);
+  data_PieChart_04.setValue(2, 1, Error); // 
+  chart_PieChart_04.draw(data_PieChart_04, options_PieChart_04); // Redraw the chart with updated data
+  }
+  // CV107
+  function update_PieChart_05(Run, Sleep) {
+  data_PieChart_05.setValue(0, 1, Run); // 
+  data_PieChart_05.setValue(1, 1, Sleep); // 
+  var Error = 24-(Run+Sleep);
+  data_PieChart_05.setValue(2, 1, Error); // 
+  chart_PieChart_05.draw(data_PieChart_05, options_PieChart_05); // Redraw the chart with updated data
+  }
+/*-----------------------------FUNCTION- Update Line Chart------------------------------------*/
+    function appendData_LineChart_01(CV103, CV104, CV105, CV106, CV107) {
+      const now = new Date();
+      const newRow = [
+        formatTime(now), // Use formatted current time
+        CV103, CV104, CV105, CV106, CV107 // Manual Pail Rate input
+      ];
+      data_LineChart_01.addRow(newRow);
+
+      // Limit rows in the chart to maxRows
+      const maxRows = 1000;
+      while (data_LineChart_01.getNumberOfRows() > maxRows) {
+        data_LineChart_01.removeRow(0);
+      }
+      // Redraw the chart with the updated data
+      chart_LineChart_01.draw(data_LineChart_01, options_LineChart_01);
+      chart_LineChart_01.draw(view_LineChart_01, options_LineChart_01);
+    }
+  /*-----------------------------FUNCTION- Update Column Chart-01------------------------------------*/
+    function update_ColumnChart_01( CV103_Tint, CV103_275, CV103_370, CV103_375, CV103_380,
+                                    CV104_Tint, CV104_275, CV104_370, CV104_375, CV104_380,
+                                    CV105_Tint, CV105_275, CV105_370, CV105_375, CV105_380,
+                                    CV106_Tint, CV106_275, CV106_370, CV106_375, CV106_380,
+                                    CV107_Tint, CV107_275, CV107_370, CV107_375, CV107_380) {
+      data_ColumnChart_01.setValue(0, 1, CV103_Tint); data_ColumnChart_01.setValue(0, 2, CV103_275);data_ColumnChart_01.setValue(0, 3, CV103_370);data_ColumnChart_01.setValue(0, 4, CV103_375);data_ColumnChart_01.setValue(0, 5, CV103_380);  
+      data_ColumnChart_01.setValue(1, 1, CV104_Tint); data_ColumnChart_01.setValue(1, 2, CV104_275);data_ColumnChart_01.setValue(1, 3, CV104_370);data_ColumnChart_01.setValue(1, 4, CV104_375);data_ColumnChart_01.setValue(1, 5, CV104_380);  
+      data_ColumnChart_01.setValue(2, 1, CV105_Tint); data_ColumnChart_01.setValue(2, 2, CV105_275);data_ColumnChart_01.setValue(2, 3, CV105_370);data_ColumnChart_01.setValue(2, 4, CV105_375);data_ColumnChart_01.setValue(2, 5, CV105_380);  
+      data_ColumnChart_01.setValue(3, 1, CV106_Tint); data_ColumnChart_01.setValue(3, 2, CV106_275);data_ColumnChart_01.setValue(3, 3, CV106_370);data_ColumnChart_01.setValue(3, 4, CV106_375);data_ColumnChart_01.setValue(3, 5, CV106_380);  
+      data_ColumnChart_01.setValue(4, 1, CV107_Tint); data_ColumnChart_01.setValue(4, 2, CV107_275);data_ColumnChart_01.setValue(4, 3, CV107_370);data_ColumnChart_01.setValue(4, 4, CV107_375);data_ColumnChart_01.setValue(4, 5, CV107_380); 
+      // Calculate totals for annotations
+      for (let i = 0; i < data_ColumnChart_01.getNumberOfRows(); i++) {
+        const total = data_ColumnChart_01.getValue(i, 1) + data_ColumnChart_01.getValue(i, 2) + data_ColumnChart_01.getValue(i, 3)
+                    + data_ColumnChart_01.getValue(i, 4) + data_ColumnChart_01.getValue(i, 5);
+        data_ColumnChart_01.setValue(i, 6, total.toString()); // Set total as annotation
+      }    
+      chart_ColumnChart_01.draw(data_ColumnChart_01, options_ColumnChart_01); // Redraw the chart with updated data
+    }
+  /*-----------------------------FUNCTION- Update Column Chart-02------------------------------------*/
+    function update_ColumnChart_02( CV103_TimeRun, CV103_TimeSleep, CV103_TimeError,
+                                    CV104_TimeRun, CV104_TimeSleep, CV104_TimeError,
+                                    CV105_TimeRun, CV105_TimeSleep, CV105_TimeError,
+                                    CV106_TimeRun, CV106_TimeSleep, CV106_TimeError,
+                                    CV107_TimeRun, CV107_TimeSleep, CV107_TimeError) {
+      data_ColumnChart_02.setValue(0, 1, CV103_TimeRun); data_ColumnChart_02.setValue(0, 2, CV103_TimeSleep);data_ColumnChart_02.setValue(0, 3, CV103_TimeError);  
+      data_ColumnChart_02.setValue(1, 1, CV104_TimeRun); data_ColumnChart_02.setValue(1, 2, CV104_TimeSleep);data_ColumnChart_02.setValue(1, 3, CV104_TimeError);  
+      data_ColumnChart_02.setValue(2, 1, CV105_TimeRun); data_ColumnChart_02.setValue(2, 2, CV105_TimeSleep);data_ColumnChart_02.setValue(2, 3, CV105_TimeError);  
+      data_ColumnChart_02.setValue(3, 1, CV106_TimeRun); data_ColumnChart_02.setValue(3, 2, CV106_TimeSleep);data_ColumnChart_02.setValue(3, 3, CV106_TimeError);  
+      data_ColumnChart_02.setValue(4, 1, CV107_TimeRun); data_ColumnChart_02.setValue(4, 2, CV107_TimeSleep);data_ColumnChart_02.setValue(4, 3, CV107_TimeError); 
+      // Calculate totals for annotations
+      for (let i = 0; i < data_ColumnChart_02.getNumberOfRows(); i++) {
+        const total = data_ColumnChart_02.getValue(i, 1) + data_ColumnChart_02.getValue(i, 2) + data_ColumnChart_02.getValue(i, 3);
+        data_ColumnChart_02.setValue(i, 4, total.toString()); // Set total as annotation
+      }  
+      chart_ColumnChart_02.draw(data_ColumnChart_02, options_ColumnChart_02); // Redraw the chart with updated data
+    }
+/*-----------------------------Utility Function------------------------------------*/
+    // Function to format the current time as HH:MM:SS
+    function formatTime(date) {
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const seconds = date.getSeconds().toString().padStart(2, '0');
+      return `${hours}:${minutes}:${seconds}`;
+    }
+  </script> 
+    <!--------------------------------- GET DATA FROM ERA ---------------------------->   
+    <script>
+      const eraWidget = new EraWidget();
+      // Khai báo các tag sử dụng    
+      let C3_nFb_PailType   = null,
+          C4_nFb_PailType   = null,
+          C5_nFb_PailType   = null,
+          C6_nFb_PailType   = null,
+          C7_nFb_PailType   = null;
+      // Pail Rate   
+      let C3_nFb_PailRate   = null,
+          C4_nFb_PailRate   = null,
+          C5_nFb_PailRate   = null,
+          C6_nFb_PailRate   = null,
+          C7_nFb_PailRate   = null;
+      // Total Pail
+      let C3_nFb_Total_Tint   = null,
+          C3_nFb_Total_275    = null,
+          C3_nFb_Total_370    = null,
+          C3_nFb_Total_375    = null,
+          C3_nFb_Total_380    = null;
+      //
+      let C4_nFb_Total_Tint   = null,
+          C4_nFb_Total_275    = null,
+          C4_nFb_Total_370    = null,
+          C4_nFb_Total_375    = null,
+          C4_nFb_Total_380    = null;
+      //
+      let C5_nFb_Total_Tint   = null,
+          C5_nFb_Total_275    = null,
+          C5_nFb_Total_370    = null,
+          C5_nFb_Total_375    = null,
+          C5_nFb_Total_380    = null;
+      //
+      let C6_nFb_Total_Tint   = null,
+          C6_nFb_Total_275    = null,
+          C6_nFb_Total_370    = null,
+          C6_nFb_Total_375    = null,
+          C6_nFb_Total_380    = null;
+      //
+      let C7_nFb_Total_Tint   = null,
+          C7_nFb_Total_275    = null,
+          C7_nFb_Total_370    = null,
+          C7_nFb_Total_375    = null,
+          C7_nFb_Total_380    = null;
+      // Total Time
+      let C3_nFb_Total_TimeRun    = null,C4_nFb_Total_TimeRun    = null,C5_nFb_Total_TimeRun    = null,C6_nFb_Total_TimeRun    = null,C7_nFb_Total_TimeRun    = null,
+          C3_nFb_Total_TimeSleep  = null,C4_nFb_Total_TimeSleep  = null,C5_nFb_Total_TimeSleep  = null,C6_nFb_Total_TimeSleep  = null,C7_nFb_Total_TimeSleep  = null,
+          C3_nFb_Total_TimeError  = null,C4_nFb_Total_TimeError  = null,C5_nFb_Total_TimeError  = null,C6_nFb_Total_TimeError  = null,C7_nFb_Total_TimeError  = null;
+      //
+      const maxRows = 1000; // Limit the number of rows in the data table    
+      eraWidget.init({
+        // Lưu các cấu hình khi nhận được từ widget
+        onConfiguration: (configuration) => {
+          // Pail Type
+          C3_nFb_PailType = configuration.realtime_configs[0]; // 
+          C4_nFb_PailType = configuration.realtime_configs[1]; // 
+          C5_nFb_PailType = configuration.realtime_configs[2]; // 
+          C6_nFb_PailType = configuration.realtime_configs[3]; // 
+          C7_nFb_PailType = configuration.realtime_configs[4]; // 
+          // Pail Rate
+          C3_nFb_PailRate = configuration.realtime_configs[5]; // 
+          C4_nFb_PailRate = configuration.realtime_configs[6]; // 
+          C5_nFb_PailRate = configuration.realtime_configs[7]; // 
+          C6_nFb_PailRate = configuration.realtime_configs[8]; // 
+          C7_nFb_PailRate = configuration.realtime_configs[9]; // 
+          // Total Pail
+          C3_nFb_Total_Tint = configuration.realtime_configs[10]; // 
+          C3_nFb_Total_275  = configuration.realtime_configs[11]; // 
+          C3_nFb_Total_370  = configuration.realtime_configs[12]; // 
+          C3_nFb_Total_375  = configuration.realtime_configs[13]; // 
+          C3_nFb_Total_380  = configuration.realtime_configs[14]; // 
+          // Total Pail
+          C4_nFb_Total_Tint = configuration.realtime_configs[15]; // 
+          C4_nFb_Total_275  = configuration.realtime_configs[16]; // 
+          C4_nFb_Total_370  = configuration.realtime_configs[17]; // 
+          C4_nFb_Total_375  = configuration.realtime_configs[18]; // 
+          C4_nFb_Total_380  = configuration.realtime_configs[19]; // 
+          // Total Pail
+          C5_nFb_Total_Tint = configuration.realtime_configs[20]; // 
+          C5_nFb_Total_275  = configuration.realtime_configs[21]; // 
+          C5_nFb_Total_370  = configuration.realtime_configs[22]; // 
+          C5_nFb_Total_375  = configuration.realtime_configs[23]; // 
+          C5_nFb_Total_380  = configuration.realtime_configs[24]; //
+          // Total Pail
+          C6_nFb_Total_Tint = configuration.realtime_configs[25]; // 
+          C6_nFb_Total_275  = configuration.realtime_configs[26]; // 
+          C6_nFb_Total_370  = configuration.realtime_configs[27]; // 
+          C6_nFb_Total_375  = configuration.realtime_configs[28]; // 
+          C6_nFb_Total_380  = configuration.realtime_configs[29]; //  
+          // Total Pail
+          C7_nFb_Total_Tint = configuration.realtime_configs[30]; // 
+          C7_nFb_Total_275  = configuration.realtime_configs[31]; // 
+          C7_nFb_Total_370  = configuration.realtime_configs[32]; // 
+          C7_nFb_Total_375  = configuration.realtime_configs[33]; // 
+          C7_nFb_Total_380  = configuration.realtime_configs[34]; // 
+          // Total Time 
+          C3_nFb_Total_TimeRun     = configuration.realtime_configs[35]; // 
+          C4_nFb_Total_TimeRun     = configuration.realtime_configs[36]; // 
+          C5_nFb_Total_TimeRun     = configuration.realtime_configs[37]; //  
+          C6_nFb_Total_TimeRun     = configuration.realtime_configs[38]; // 
+          C7_nFb_Total_TimeRun     = configuration.realtime_configs[39]; // 
+          C3_nFb_Total_TimeSleep   = configuration.realtime_configs[40]; //  
+          C4_nFb_Total_TimeSleep   = configuration.realtime_configs[41]; // 
+          C5_nFb_Total_TimeSleep   = configuration.realtime_configs[42]; // 
+          C6_nFb_Total_TimeSleep   = configuration.realtime_configs[43]; //  
+          C7_nFb_Total_TimeSleep   = configuration.realtime_configs[44]; // 
+          C3_nFb_Total_TimeError  = configuration.realtime_configs[45]; // 
+          C4_nFb_Total_TimeError  = configuration.realtime_configs[46]; //  
+          C5_nFb_Total_TimeError  = configuration.realtime_configs[47]; // 
+          C6_nFb_Total_TimeError  = configuration.realtime_configs[48]; // 
+          C7_nFb_Total_TimeError  = configuration.realtime_configs[49]; //  
+        },
+        // Update the chart with new values
+        onValues: (values) => {
+          // Update the chart with new values
+          update_PieChart_01( values[C3_nFb_Total_TimeRun.id].value, values[C3_nFb_Total_TimeSleep.id]);
+          //update_PieChart_02( values[C4_nFb_Total_TimeRun.id].value, values[C4_nFb_Total_TimeSleep.id]);
+          //update_PieChart_03( values[C5_nFb_Total_TimeRun.id].value, values[C5_nFb_Total_TimeSleep.id]);
+          //update_PieChart_04( values[C6_nFb_Total_TimeRun.id].value, values[C6_nFb_Total_TimeSleep.id]);
+          //update_PieChart_05( values[C7_nFb_Total_TimeRun.id].value, values[C7_nFb_Total_TimeSleep.id]);
+          // Pail Rate
+          appendData_LineChart_01(  values[C3_nFb_PailRate.id].value,
+                                    values[C4_nFb_PailRate.id].value, 
+                                    values[C5_nFb_PailRate.id].value, 
+                                    values[C6_nFb_PailRate.id].value, 
+                                    values[C7_nFb_PailRate.id].value);
+          // Total Product
+          update_ColumnChart_01(values[C3_nFb_Total_Tint.id].value, values[C3_nFb_Total_275.id].value,values[C3_nFb_Total_370.id].value,values[C3_nFb_Total_375.id].value, values[C3_nFb_Total_380.id].value,
+                                values[C4_nFb_Total_Tint.id].value, values[C4_nFb_Total_275.id].value,values[C4_nFb_Total_370.id].value,values[C4_nFb_Total_375.id].value, values[C4_nFb_Total_380.id].value,
+                                values[C5_nFb_Total_Tint.id].value, values[C5_nFb_Total_275.id].value,values[C5_nFb_Total_370.id].value,values[C5_nFb_Total_375.id].value, values[C5_nFb_Total_380.id].value,
+                                values[C6_nFb_Total_Tint.id].value, values[C6_nFb_Total_275.id].value,values[C6_nFb_Total_370.id].value,values[C6_nFb_Total_375.id].value, values[C6_nFb_Total_380.id].value,
+                                values[C7_nFb_Total_Tint.id].value, values[C7_nFb_Total_275.id].value,values[C7_nFb_Total_370.id].value,values[C7_nFb_Total_375.id].value, values[C7_nFb_Total_380.id].value
+          );
+          // Total Time
+          update_ColumnChart_02(values[C3_nFb_Total_TimeRun.id].value, values[C3_nFb_Total_TimeSleep.id].value,values[C3_nFb_Total_TimeError.id].value,
+                                values[C4_nFb_Total_TimeRun.id].value, values[C4_nFb_Total_TimeSleep.id].value,values[C4_nFb_Total_TimeError.id].value,
+                                values[C5_nFb_Total_TimeRun.id].value, values[C5_nFb_Total_TimeSleep.id].value,values[C5_nFb_Total_TimeError.id].value,
+                                values[C6_nFb_Total_TimeRun.id].value, values[C6_nFb_Total_TimeSleep.id].value,values[C6_nFb_Total_TimeError.id].value,
+                                values[C7_nFb_Total_TimeRun.id].value, values[C7_nFb_Total_TimeSleep.id].value,values[C7_nFb_Total_TimeError.id].value
+          );
+        },
+      });
+    </script>
+</body>
+</html>
